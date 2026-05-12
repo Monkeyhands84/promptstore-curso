@@ -56,8 +56,7 @@ export function Hero({ featuredSlug }: { featuredSlug: string | null }) {
           textWrap: "pretty",
         }}
       >
-        Guarda, organiza y mejora los prompts que usas con ChatGPT, Claude o
-        Midjourney. Todo en un solo lugar.
+        Esto es un cambio de prueba
       </p>
 
       <div
