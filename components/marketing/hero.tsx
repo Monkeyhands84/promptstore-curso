@@ -56,7 +56,7 @@ export function Hero({ featuredSlug }: { featuredSlug: string | null }) {
           textWrap: "pretty",
         }}
       >
-        Prueba demostración
+        Prueba demostración desde GitHub
       </p>
 
       <div
