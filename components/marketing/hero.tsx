@@ -30,6 +30,24 @@ export function Hero({ featuredSlug }: { featuredSlug: string | null }) {
         MVP lanzado
       </div>
 
+      {maintenanceMode && (
+        <div
+          style={{
+            margin: "0 auto 18px",
+            maxWidth: 560,
+            padding: "10px 14px",
+            borderRadius: 10,
+            background: "oklch(95% 0.04 85)",
+            color: "oklch(35% 0.09 85)",
+            fontSize: 14,
+            lineHeight: 1.5,
+            border: "1px solid oklch(85% 0.08 85)",
+          }}
+        >
+          {maintenanceMessage}
+        </div>
+      )}
+
       <h1
         style={{
           fontSize: "clamp(36px, 6vw, 64px)",
@@ -97,6 +115,15 @@ export function Hero({ featuredSlug }: { featuredSlug: string | null }) {
           </Link>
         )}
       </div>
+
     </section>
   );
 }
+
+const maintenanceMode =
+  process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
+
+const maintenanceMessage =
+  process.env.NEXT_PUBLIC_MAINTENANCE_MESSAGE ||
+  "Estamos en mantenimiento. Vuelve en unos minutos.";
+
