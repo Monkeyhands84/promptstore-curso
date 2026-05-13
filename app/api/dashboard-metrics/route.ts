@@ -28,7 +28,7 @@ export async function GET() {
   console.error("[demo-logs] Fallo controlado en dashboard-metrics para la clase 5");
 
   return NextResponse.json(
-    { error: "Fallo controlado para probar logs en Vercel." },
+    { error: "No se pudieron cargar las métricas." },
     { status: 500 },
   );
 
