@@ -10,6 +10,7 @@ import { DashboardSearchBar } from "@/components/dashboard/search-bar";
 import { DashboardErrorBanner } from "@/components/dashboard/error-banner";
 import { DashboardEmptyState } from "@/components/dashboard/empty-state";
 import { DashboardMetricsPanel } from "@/components/dashboard/metrics-panel";
+import { BlobUploadPanel } from "@/components/dashboard/blob-upload-panel";
 import { PromptCard } from "@/components/dashboard/prompt-card";
 
 export function DashboardList({
@@ -112,6 +113,8 @@ export function DashboardList({
         )}
 
         <DashboardMetricsPanel />
+
+        <BlobUploadPanel />
 
         <DashboardSearchBar search={search} onSearchChange={setSearch} />
 
