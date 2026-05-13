@@ -25,14 +25,6 @@ export async function GET() {
 
   const since24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
-  console.error("[demo-logs] Fallo controlado en dashboard-metrics para la clase 5");
-
-  return NextResponse.json(
-    { error: "No se pudieron cargar las métricas." },
-    { status: 500 },
-  );
-
-
   const [totalRes, favoriteRes, publicRes, aiUsageRes] = await Promise.all([
     supabase
       .from("prompts")
@@ -49,7 +41,7 @@ export async function GET() {
       .eq("user_id", user.id)
       .eq("public", true),
     supabase
-      .from("ai_usage_error_demo")
+      .from("ai_usage")
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id)
       .gte("created_at", since24h),
