@@ -74,7 +74,7 @@ export function Hero({ featuredSlug }: { featuredSlug: string | null }) {
           textWrap: "pretty",
         }}
       >
-        Prueba demostración desde GitHub
+        Cambio revisado en Preview Deployment
       </p>
 
       <div
