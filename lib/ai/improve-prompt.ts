@@ -1,8 +1,11 @@
 import "server-only";
 
-import { getOpenAIClient } from "@/lib/ai/openai";
+import { generateText } from "ai";
 
-const DEFAULT_MODEL = "gpt-5.2";
+const DEFAULT_MODEL = "openai/gpt-5.5";
+
+const SYSTEM_INSTRUCTIONS =
+  "Eres un experto en prompt engineering. Mejora prompts de usuario para que sean más claros, específicos y accionables. Mantén el idioma original del prompt. Devuelve únicamente la versión mejorada, sin explicaciones, sin markdown envolvente y sin comentarios previos.";
 
 type ImprovePromptInput = {
   title?: string;
@@ -15,39 +18,28 @@ export async function improvePromptWithAI({
   category,
   content,
 }: ImprovePromptInput): Promise<string> {
-  const client = getOpenAIClient();
+  const prompt = [
+    title?.trim() ? `Título: ${title.trim()}` : null,
+    category?.trim() ? `Categoría: ${category.trim()}` : null,
+    "Prompt original:",
+    content.trim(),
+    "",
+    "Mejóralo añadiendo, cuando sea útil: rol, contexto, objetivo, restricciones, formato de salida, tono y criterios de calidad. Conserva variables como [VARIABLES] si existen.",
+  ]
+    .filter(Boolean)
+    .join("\n");
 
-  const response = await client.responses.create({
-    model: process.env.OPENAI_MODEL || DEFAULT_MODEL,
-    instructions:
-      "Eres un experto en prompt engineering. Mejora prompts de usuario para que sean más claros, específicos y accionables. Mantén el idioma original del prompt. Devuelve únicamente la versión mejorada, sin explicaciones, sin markdown envolvente y sin comentarios previos.",
-    input: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "input_text",
-            text: [
-              title?.trim() ? `Título: ${title.trim()}` : null,
-              category?.trim() ? `Categoría: ${category.trim()}` : null,
-              "Prompt original:",
-              content.trim(),
-              "",
-              "Mejóralo añadiendo, cuando sea útil: rol, contexto, objetivo, restricciones, formato de salida, tono y criterios de calidad. Conserva variables como [VARIABLES] si existen.",
-            ]
-              .filter(Boolean)
-              .join("\n"),
-          },
-        ],
-      },
-    ],
-    max_output_tokens: 1200,
+  const { text } = await generateText({
+    model: process.env.AI_GATEWAY_MODEL || DEFAULT_MODEL,
+    system: SYSTEM_INSTRUCTIONS,
+    prompt,
+    maxOutputTokens: 1200,
   });
 
-  const improvedPrompt = response.output_text.trim();
+  const improvedPrompt = text.trim();
 
   if (!improvedPrompt) {
-    throw new Error("OpenAI no devolvió una mejora válida.");
+    throw new Error("La IA no devolvió una mejora válida.");
   }
 
   return improvedPrompt;

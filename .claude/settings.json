@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(vercel --version)",
+      "Bash(vc env *)",
+      "Bash(cp .env.local .env.local.backup.pre-aigateway && echo \"backup ok\" && vc env pull .env.local --yes 2>&1 | tail -10)",
+      "Bash(node -e ' *)"
+    ],
+    "additionalDirectories": [
+      "/Users/monkeyhands/promptstore-curso"
     ]
   }
 }
