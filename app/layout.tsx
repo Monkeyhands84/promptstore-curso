@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, DM_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Navbar } from "@/components/navbar";
 import { createClient } from "@/lib/supabase/server";
 import "./globals.css";
@@ -44,6 +45,7 @@ export default async function RootLayout({
       <body>
         <Navbar userName={userName} />
         {children}
+        <Analytics />
       </body>
     </html>
   );
